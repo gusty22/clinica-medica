@@ -11,6 +11,7 @@
     <module>clinica-medica-administrativo</module>
     <module>clinica-medica-atendimento</module>
     <module>clinica-medica-agendamento</module>
+    <module>clinica-medica-central</module>
   </modules>
 
   <properties>
