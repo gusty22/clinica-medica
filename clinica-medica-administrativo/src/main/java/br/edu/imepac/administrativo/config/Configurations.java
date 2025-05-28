@@ -1,4 +1,4 @@
-package br.edu.imepac.administrativo.administrativo.config;
+package br.edu.imepac.administrativo.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

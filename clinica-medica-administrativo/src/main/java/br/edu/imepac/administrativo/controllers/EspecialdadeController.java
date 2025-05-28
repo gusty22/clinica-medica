@@ -1,8 +1,8 @@
-package br.edu.imepac.administrativo.administrativo.controllers;
+package br.edu.imepac.administrativo.controllers;
 
-import br.edu.imepac.comum.dtos.especialidade.EspecialidadeDto;
-import br.edu.imepac.comum.dtos.especialidade.EspecialidadeRequest;
-import br.edu.imepac.comum.services.EspecialidadeService;
+import br.edu.imepac.dtos.especialidade.EspecialidadeDto;
+import br.edu.imepac.dtos.especialidade.EspecialidadeRequest;
+import br.edu.imepac.services.EspecialidadeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
