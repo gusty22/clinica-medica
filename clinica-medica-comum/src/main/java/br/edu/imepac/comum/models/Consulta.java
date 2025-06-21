@@ -1,0 +1,44 @@
+package br.edu.imepac.comum.models;
+
+import jakarta.persistence.*;
+import lombok.Data;
+
+import java.time.LocalDateTime;
+
+@Data
+@Entity
+public class Consulta {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(name = "data_horario", nullable = false)
+    private LocalDateTime dataHorario;
+
+    @Column(name = "sintomas", nullable = true, length = 500)
+    private String sintomas;
+
+    @Column(name = "e_retorno", nullable = false)
+    private boolean eRetorno;
+
+    @Column(name = "esta_ativa", nullable = false)
+    private boolean estaAtiva;
+
+
+    @ManyToOne
+    @JoinColumn(name = "convenio_id", nullable = false)
+    private Convenio convenio;
+
+    @ManyToOne
+    @JoinColumn(name = "paciente_id", nullable = false)
+    private Paciente paciente;
+
+    @OneToOne
+    @JoinColumn(name = "prontuario_id", nullable = true)
+    private Prontuario prontuario;
+
+    @ManyToOne
+    @JoinColumn(name = "funcionario_id", nullable = false)
+    private Funcionario funcionario;
+}
