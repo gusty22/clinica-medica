@@ -1,5 +1,6 @@
 package br.edu.imepac.comum.dtos.funcionario;
 
+import br.edu.imepac.comum.models.EnumTipoFuncionario;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,4 +28,6 @@ public class FuncionarioRequest {
     private String email;
     private LocalDate dataNascimento;
     private List<Long> especialidadesIds;
+
+    private EnumTipoFuncionario tipoFuncionario;
 }

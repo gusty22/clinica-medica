@@ -2,7 +2,7 @@ package br.edu.imepac.comum.domain;
 
 
 public class PerfilDomain {
-    private Long id;
+    private int id;
     private String nome;
 
     private boolean cadastrarFuncionario;
@@ -41,7 +41,7 @@ public class PerfilDomain {
     private boolean deletarProntuario;
     private boolean listarProntuario;
 
-    public PerfilDomain(Long id, String nome, boolean cadastrarFuncionario, boolean lerFuncionario, boolean atualizarFuncionario, boolean deletarFuncionario, boolean listarFuncionario, boolean cadastrarPaciente, boolean lerPaciente, boolean atualizarPaciente, boolean deletarPaciente, boolean listarPaciente, boolean cadastrarConsulta, boolean lerConsulta, boolean atualizarConsulta, boolean deletarConsulta, boolean listarConsulta, boolean cadastrarEspecialidade, boolean lerEspecialidade, boolean atualizarEspecialidade, boolean deletarEspecialidade, boolean listarEspecialidade, boolean cadastrarConvenio, boolean lerConvenio, boolean atualizarConvenio, boolean deletarConvenio, boolean listarConvenio, boolean cadastrarProntuario, boolean lerProntuario, boolean atualizarProntuario, boolean deletarProntuario, boolean listarProntuario) {
+    public PerfilDomain(int id, String nome, boolean cadastrarFuncionario, boolean lerFuncionario, boolean atualizarFuncionario, boolean deletarFuncionario, boolean listarFuncionario, boolean cadastrarPaciente, boolean lerPaciente, boolean atualizarPaciente, boolean deletarPaciente, boolean listarPaciente, boolean cadastrarConsulta, boolean lerConsulta, boolean atualizarConsulta, boolean deletarConsulta, boolean listarConsulta, boolean cadastrarEspecialidade, boolean lerEspecialidade, boolean atualizarEspecialidade, boolean deletarEspecialidade, boolean listarEspecialidade, boolean cadastrarConvenio, boolean lerConvenio, boolean atualizarConvenio, boolean deletarConvenio, boolean listarConvenio, boolean cadastrarProntuario, boolean lerProntuario, boolean atualizarProntuario, boolean deletarProntuario, boolean listarProntuario) {
         this.id = id;
         this.nome = nome;
         this.cadastrarFuncionario = cadastrarFuncionario;
@@ -76,11 +76,11 @@ public class PerfilDomain {
         this.listarProntuario = listarProntuario;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

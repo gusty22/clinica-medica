@@ -1,12 +1,20 @@
 package br.edu.imepac.comum.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Data
+import java.util.List;
+
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Table(name = "perfis")
 public class Perfil {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -103,5 +111,9 @@ public class Perfil {
 
     @Column(nullable = false)
     private boolean listarProntuario;
+
+
+    @OneToMany(mappedBy = "perfil")
+    private List<Funcionario> funcionarios;
 }
 

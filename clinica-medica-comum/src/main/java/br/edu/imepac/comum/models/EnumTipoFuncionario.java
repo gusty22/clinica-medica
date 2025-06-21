@@ -1,7 +1,7 @@
 package br.edu.imepac.comum.models;
 
-public enum TipoFuncionario {
+public enum EnumTipoFuncionario {
     ATENDENTE,
     MEDICO,
-    OUTROS
+    ADMINISTRADOR
 }

@@ -1,13 +1,18 @@
 package br.edu.imepac.comum.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@Data
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "funcionarios")
 public class Funcionario {
 
     @Id
@@ -64,8 +69,17 @@ public class Funcionario {
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
 
+
     @OneToMany(mappedBy = "funcionario")
     private List<Consulta> consultas;
+
+    @ManyToOne
+    @JoinColumn(name = "perfil_id", nullable = false)
+    private Perfil perfil;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_funcionario", nullable = false)
+    private EnumTipoFuncionario tipoFuncionario;
 
     @ManyToMany
     @JoinTable(
