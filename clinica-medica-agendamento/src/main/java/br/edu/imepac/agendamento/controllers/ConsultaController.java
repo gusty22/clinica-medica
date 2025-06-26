@@ -48,7 +48,7 @@ public class ConsultaController {
 
     public void cancelarConsulta(@PathVariable Long id) {
         log.info("Cancelar Consulta - controller:  {}", id);
-        consultaService.removerConsulta(id);
+        consultaService.cancelarConsulta(id);
     }
 
     @GetMapping("/{id}")
