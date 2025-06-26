@@ -6,6 +6,7 @@ import br.edu.imepac.comum.services.PerfilService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -24,30 +25,55 @@ public class PerfilController {
     @ResponseStatus(HttpStatus.CREATED)
     public PerfilDto criarPerfil(@RequestBody PerfilRequest perfilRequest) {
         log.info("Criando perfil - controller: {}", perfilRequest);
-        return perfilService.adicionarPerfil(perfilRequest);
+        try {
+            return perfilService.adicionarPerfil(perfilRequest);
+        } catch (Exception e) {
+            log.error("Erro ao criar perfil", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro ao criar perfil.");
+        }
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public PerfilDto atualizarPerfil(@PathVariable Long id, @RequestBody PerfilDto perfilDto) {
-        return perfilService.atualizarPerfil(id, perfilDto);
+        try {
+            return perfilService.atualizarPerfil(id, perfilDto);
+        } catch (Exception e) {
+            log.error("Erro ao atualizar perfil ID {}: {}", id, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erro ao atualizar perfil.");
+        }
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removerPerfil(@PathVariable Long id) {
-        perfilService.removerPerfil(id);
+        try {
+            perfilService.removerPerfil(id);
+        } catch (Exception e) {
+            log.error("Erro ao remover perfil ID {}: {}", id, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Perfil não encontrado.");
+        }
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public PerfilDto buscarPerfilPorId(@PathVariable Long id) {
-        return perfilService.buscarPerfilPorId(id);
+        try {
+            return perfilService.buscarPerfilPorId(id);
+        } catch (Exception e) {
+            log.error("Erro ao buscar perfil ID {}: {}", id, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Perfil não encontrado.");
+        }
     }
 
     @GetMapping("/listar")
     @ResponseStatus(HttpStatus.OK)
     public List<PerfilDto> listarPerfis() {
-        return perfilService.listarPerfis();
+        try {
+            return perfilService.listarPerfis();
+        } catch (Exception e) {
+            log.error("Erro ao listar perfis", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro ao listar perfis.");
+        }
     }
 }

@@ -6,16 +6,18 @@ import br.edu.imepac.comum.services.EspecialidadeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 @Slf4j
 @RestController
 @RequestMapping("/especialidades")
-public class EspecialdadeController {
+public class EspecialidadeController {
+
     private final EspecialidadeService especialidadeService;
 
-    public EspecialdadeController(EspecialidadeService especialidadeService) {
+    public EspecialidadeController(EspecialidadeService especialidadeService) {
         this.especialidadeService = especialidadeService;
     }
 
@@ -23,30 +25,55 @@ public class EspecialdadeController {
     @ResponseStatus(HttpStatus.CREATED)
     public EspecialidadeDto criarEspecialidade(@RequestBody EspecialidadeRequest especialidadeRequest) {
         log.info("Criando especialidade - controller: {}", especialidadeRequest);
-        return especialidadeService.adicionarEspecialidade(especialidadeRequest);
+        try {
+            return especialidadeService.adicionarEspecialidade(especialidadeRequest);
+        } catch (Exception e) {
+            log.error("Erro ao criar especialidade", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro ao criar especialidade.");
+        }
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public EspecialidadeDto atualizarEspecialidade(@PathVariable Long id, @RequestBody EspecialidadeDto especialidadeDto) {
-        return especialidadeService.atualizarEspecialidade(id, especialidadeDto);
+        try {
+            return especialidadeService.atualizarEspecialidade(id, especialidadeDto);
+        } catch (Exception e) {
+            log.error("Erro ao atualizar especialidade ID {}: {}", id, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erro ao atualizar especialidade.");
+        }
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removerEspecialidade(@PathVariable Long id) {
-        especialidadeService.removerEspecialidade(id);
+        try {
+            especialidadeService.removerEspecialidade(id);
+        } catch (Exception e) {
+            log.error("Erro ao remover especialidade ID {}: {}", id, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Especialidade não encontrada.");
+        }
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public EspecialidadeDto buscarEspecialidadePorId(@PathVariable Long id) {
-        return especialidadeService.buscarEspecialidadePorId(id);
+        try {
+            return especialidadeService.buscarEspecialidadePorId(id);
+        } catch (Exception e) {
+            log.error("Erro ao buscar especialidade ID {}: {}", id, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Especialidade não encontrada.");
+        }
     }
 
     @GetMapping("/listar")
     @ResponseStatus(HttpStatus.OK)
     public List<EspecialidadeDto> listarEspecialidades() {
-        return especialidadeService.listarEspecialidades();
+        try {
+            return especialidadeService.listarEspecialidades();
+        } catch (Exception e) {
+            log.error("Erro ao listar especialidades", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro ao listar especialidades.");
+        }
     }
 }
