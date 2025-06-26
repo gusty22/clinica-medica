@@ -39,8 +39,8 @@ public class ConsultaService {
         return modelMapper.map(consultaAtualizada, ConsultaDto.class);
     }
 
-    public void removerConsulta(Long id) {
-        log.info("Removendo consulta com ID: {}", id);
+    public void cancelarConsulta(Long id) {
+        log.info("Cancelando consulta com ID: {}", id);
         Consulta consulta = consultaRepository.findById(id)
                 .orElseThrow(() -> new NotFoundClinicaMedicaException("Consulta não encontrada com ID: " + id));
         consultaRepository.delete(consulta);
