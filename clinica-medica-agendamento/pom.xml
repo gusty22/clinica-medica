@@ -7,10 +7,10 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>clinica-medica-agendamento</artifactId>
+    <artifactId>clinica-medica-atendimento</artifactId>
     <packaging>jar</packaging>
 
-    <name>clinica-medica-agendamento</name>
+    <name>clinica-medica-atendimento</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -18,13 +18,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -48,6 +41,12 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>br.edu.imepac</groupId>
+            <artifactId>clinica-medica-administrativo</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
 
     </dependencies>
