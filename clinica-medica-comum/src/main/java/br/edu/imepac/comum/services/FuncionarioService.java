@@ -3,7 +3,6 @@ package br.edu.imepac.comum.services;
 import br.edu.imepac.comum.dtos.funcionario.FuncionarioDto;
 import br.edu.imepac.comum.dtos.funcionario.FuncionarioRequest;
 import br.edu.imepac.comum.models.Funcionario;
-import br.edu.imepac.comum.models.Perfil;
 import br.edu.imepac.comum.repositories.IFuncionarioRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -17,25 +16,15 @@ public class FuncionarioService {
 
     private final ModelMapper modelMapper;
     private final IFuncionarioRepository funcionarioRepository;
-    private final PerfilService perfilService;
 
-    public FuncionarioService(ModelMapper modelMapper,
-                              IFuncionarioRepository funcionarioRepository,
-                              PerfilService perfilService) {
+    public FuncionarioService(ModelMapper modelMapper, IFuncionarioRepository funcionarioRepository) {
         this.modelMapper = modelMapper;
         this.funcionarioRepository = funcionarioRepository;
-        this.perfilService = perfilService;
     }
 
     public FuncionarioDto adicionarFuncionario(FuncionarioRequest funcionarioRequest) {
         log.info("Cadastro de funcionário - service: {}", funcionarioRequest);
-
         Funcionario funcionario = modelMapper.map(funcionarioRequest, Funcionario.class);
-
-        // Gera o perfil automaticamente baseado no tipo do funcionário
-        Perfil perfil = perfilService.gerarPerfilPorTipo(funcionario.getTipoFuncionario());
-        funcionario.setPerfil(perfil);
-
         funcionario = funcionarioRepository.save(funcionario);
         return modelMapper.map(funcionario, FuncionarioDto.class);
     }
@@ -44,9 +33,7 @@ public class FuncionarioService {
         log.info("Atualizando funcionário com ID: {}", id);
         Funcionario funcionarioExistente = funcionarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Funcionário não encontrado com ID: " + id));
-
         modelMapper.map(funcionarioDto, funcionarioExistente);
-
         Funcionario funcionarioAtualizado = funcionarioRepository.save(funcionarioExistente);
         return modelMapper.map(funcionarioAtualizado, FuncionarioDto.class);
     }
