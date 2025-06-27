@@ -2,8 +2,6 @@ package br.edu.imepac.agendamento.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
-import org.modelmapper.ModelMapper;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -12,9 +10,16 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ConfigModelMapper {
+
+    /**
+     * **@Bean**: Marca este método como um produtor de bean do Spring.
+     * Este método fornece uma instância de `ModelMapper`, que é uma biblioteca utilizada para mapeamento de objetos.
+     * O `ModelMapper` simplifica o processo de conversão entre objetos, como transformar DTOs em entidades e vice-versa.
+     *
+     * @return Uma nova instância de `ModelMapper`.
+     */
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
 }
-

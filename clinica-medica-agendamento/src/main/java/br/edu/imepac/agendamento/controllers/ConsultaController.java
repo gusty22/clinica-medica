@@ -9,15 +9,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @RequestMapping("/consultas")
-
+@Slf4j
 public class ConsultaController {
 
     private final ConsultaService consultaService;
-
-    /* Irá entrar no controller e percorrer até o Service, perguntando se essa consulta ja foi marcada ou nao*/
 
     public ConsultaController(ConsultaService consultaService) {
         this.consultaService = consultaService;
@@ -25,46 +22,36 @@ public class ConsultaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ConsultaDto createConsulta(@RequestBody ConsultaRequest consultaRequest) {
-       /*log.info anotação do Sl4J que é usado para verificar o fluxo*/
-        log.info("Criando Consulta - controller:  {}", consultaRequest);
-
-        return consultaService.adicionarConsulta(consultaRequest);
+    public ConsultaDto adicionarConsulta(@RequestBody ConsultaRequest request) {
+        log.info("Criando consulta - controller: {}", request);
+        return consultaService.adicionarConsulta(request);
     }
-
-    /* Agora vamos usar o método Put, que será chamado para requisições HTTP PUT no
-    endpoint com um ID, ele vai retornar o status HTTP 200 (OK). */
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-
-    public ConsultaDto atualizarConsulta(@PathVariable Long id, @RequestBody ConsultaDto consultaDto) {
-        log.info("Atualizando Consulta - controller:  {}", consultaDto);
-        return consultaService.atualizarConsulta(id, consultaDto);
+    public ConsultaDto atualizarConsulta(@PathVariable Long id, @RequestBody ConsultaDto dto) {
+        log.info("Atualizar consulta - controller: {}", dto);
+        return consultaService.atualizarConsulta(id, dto);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-
     public void cancelarConsulta(@PathVariable Long id) {
-        log.info("Cancelar Consulta - controller:  {}", id);
-        consultaService.removerConsulta(id);
+        log.info("Cancelar consulta - controller: {}", id);
+        consultaService.cancelarConsulta(id);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-
-    public ConsultaDto getConsulta(@PathVariable Long id) {
-        log.info("Consulta - controller:  {}", id);
-
+    public ConsultaDto buscarConsultaPorId(@PathVariable Long id) {
+        log.info("Buscar consulta - controller: {}", id);
         return consultaService.buscarConsultaPorId(id);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/listar")
     @ResponseStatus(HttpStatus.OK)
-
     public List<ConsultaDto> listarConsultas() {
-        log.info("Listar Consultas - controller");
+        log.info("Listar consultas - controller");
         return consultaService.listarConsultas();
     }
 }
