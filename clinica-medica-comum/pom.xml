@@ -47,20 +47,28 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
 
     </dependencies>
-<!--    <build>-->
-<!--        <plugins>-->
-<!--            &lt;!&ndash; Plugin para compilar o código Java &ndash;&gt;-->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-compiler-plugin</artifactId>-->
-<!--                <version>3.13.0</version> &lt;!&ndash; Use a versão mais recente &ndash;&gt;-->
-<!--                <configuration>-->
-<!--                    <source>${java.version}</source> &lt;!&ndash; Versão do Java utilizada no projeto &ndash;&gt;-->
-<!--                    <target>${java.version}</target> &lt;!&ndash; Versão do bytecode gerado &ndash;&gt;-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-<!--        </plugins>-->
-<!--    </build>-->
+    <!--    <build>-->
+    <!--        <plugins>-->
+    <!--            &lt;!&ndash; Plugin para compilar o código Java &ndash;&gt;-->
+    <!--            <plugin>-->
+    <!--                <groupId>org.apache.maven.plugins</groupId>-->
+    <!--                <artifactId>maven-compiler-plugin</artifactId>-->
+    <!--                <version>3.13.0</version> &lt;!&ndash; Use a versão mais recente &ndash;&gt;-->
+    <!--                <configuration>-->
+    <!--                    <source>${java.version}</source> &lt;!&ndash; Versão do Java utilizada no projeto &ndash;&gt;-->
+    <!--                    <target>${java.version}</target> &lt;!&ndash; Versão do bytecode gerado &ndash;&gt;-->
+    <!--                </configuration>-->
+    <!--            </plugin>-->
+    <!--        </plugins>-->
+    <!--    </build>-->
 </project>
