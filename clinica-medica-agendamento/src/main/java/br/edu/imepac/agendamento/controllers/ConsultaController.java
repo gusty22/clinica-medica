@@ -60,7 +60,7 @@ public class ConsultaController {
         return consultaService.buscarConsultaPorId(id);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
 
     public List<ConsultaDto> listarConsultas() {
