@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -27,8 +29,8 @@ public class Prontuario {
     @Column(name = "observacoes", length = 1000)
     private String observacoes;
 
-    @OneToOne(mappedBy = "prontuario")
-    private Consulta consulta;
+    @OneToMany(mappedBy = "prontuario")
+    private List<Consulta> consultas;
 
     @OneToOne
     @JoinColumn(name = "paciente_id")

@@ -13,6 +13,11 @@ import java.time.LocalTime;
 public class ConsultaRequest {
     private LocalDate data;
     private LocalTime horario;
+    private Boolean eRetorno;
+    private Boolean estaAtiva;
+    private String sintomas;
     private Long funcionarioId;
     private Long pacienteId;
+    private Long convenioId;
+    private Long prontuarioId;
 }
