@@ -4,7 +4,7 @@ services:
     container_name: mysql-clinica-administrativo
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_DATABASE: clinica_medica-administrativo
+      MYSQL_DATABASE: clinica_medica_administrativo
     ports:
       - "4040:3306"
 
