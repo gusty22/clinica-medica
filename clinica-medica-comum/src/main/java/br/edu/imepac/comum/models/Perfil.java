@@ -1,3 +1,4 @@
+// clinica-medica-comum/src/main/java/br/edu/imepac/comum/models/Perfil.java
 package br.edu.imepac.comum.models;
 
 import jakarta.persistence.*;
@@ -112,8 +113,9 @@ public class Perfil {
     @Column(nullable = false)
     private boolean listarProntuario;
 
+    @Column(name = "ler_actions_application", nullable = false)
+    private boolean lerActionsApplication;
 
     @OneToMany(mappedBy = "perfil")
     private List<Funcionario> funcionarios;
 }
-

@@ -40,8 +40,9 @@ public class PerfilDomain {
     private boolean atualizarProntuario;
     private boolean deletarProntuario;
     private boolean listarProntuario;
+    private boolean lerActionsApplication;
 
-    public PerfilDomain(int id, String nome, boolean cadastrarFuncionario, boolean lerFuncionario, boolean atualizarFuncionario, boolean deletarFuncionario, boolean listarFuncionario, boolean cadastrarPaciente, boolean lerPaciente, boolean atualizarPaciente, boolean deletarPaciente, boolean listarPaciente, boolean cadastrarConsulta, boolean lerConsulta, boolean atualizarConsulta, boolean deletarConsulta, boolean listarConsulta, boolean cadastrarEspecialidade, boolean lerEspecialidade, boolean atualizarEspecialidade, boolean deletarEspecialidade, boolean listarEspecialidade, boolean cadastrarConvenio, boolean lerConvenio, boolean atualizarConvenio, boolean deletarConvenio, boolean listarConvenio, boolean cadastrarProntuario, boolean lerProntuario, boolean atualizarProntuario, boolean deletarProntuario, boolean listarProntuario) {
+    public PerfilDomain(int id, String nome, boolean cadastrarFuncionario, boolean lerFuncionario, boolean atualizarFuncionario, boolean deletarFuncionario, boolean listarFuncionario, boolean cadastrarPaciente, boolean lerPaciente, boolean atualizarPaciente, boolean deletarPaciente, boolean listarPaciente, boolean cadastrarConsulta, boolean lerConsulta, boolean atualizarConsulta, boolean deletarConsulta, boolean listarConsulta, boolean cadastrarEspecialidade, boolean lerEspecialidade, boolean atualizarEspecialidade, boolean deletarEspecialidade, boolean listarEspecialidade, boolean cadastrarConvenio, boolean lerConvenio, boolean atualizarConvenio, boolean deletarConvenio, boolean listarConvenio, boolean cadastrarProntuario, boolean lerProntuario, boolean atualizarProntuario, boolean deletarProntuario, boolean listarProntuario, boolean lerActionsApplication) {
         this.id = id;
         this.nome = nome;
         this.cadastrarFuncionario = cadastrarFuncionario;
@@ -74,6 +75,7 @@ public class PerfilDomain {
         this.atualizarProntuario = atualizarProntuario;
         this.deletarProntuario = deletarProntuario;
         this.listarProntuario = listarProntuario;
+        this.lerActionsApplication = lerActionsApplication;
     }
 
     public int getId() {
@@ -333,5 +335,13 @@ public class PerfilDomain {
 
     public void setListarProntuario(boolean listarProntuario) {
         this.listarProntuario = listarProntuario;
+    }
+
+    public boolean isLerActionsApplication() {
+        return lerActionsApplication;
+    }
+
+    public void setLerActionsApplication(boolean lerActionsApplication) {
+        this.lerActionsApplication = lerActionsApplication;
     }
 }

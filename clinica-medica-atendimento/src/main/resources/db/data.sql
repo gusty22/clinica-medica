@@ -1,14 +1,15 @@
-INSERT INTO historicos(date_time, data)
+INSERT IGNORE INTO historicos(date_time, data)
 VALUES (NOW(), 'Sample data for historico');
 
-INSERT INTO perfis (
+INSERT IGNORE INTO perfis (
     nome,
     cadastrar_funcionario, ler_funcionario, atualizar_funcionario, deletar_funcionario, listar_funcionario,
     cadastrar_paciente, ler_paciente, atualizar_paciente, deletar_paciente, listar_paciente,
     cadastrar_consulta, ler_consulta, atualizar_consulta, deletar_consulta, listar_consulta,
     cadastrar_especialidade, ler_especialidade, atualizar_especialidade, deletar_especialidade, listar_especialidade,
     cadastrar_convenio, ler_convenio, atualizar_convenio, deletar_convenio, listar_convenio,
-    cadastrar_prontuario, ler_prontuario, atualizar_prontuario, deletar_prontuario, listar_prontuario
+    cadastrar_prontuario, ler_prontuario, atualizar_prontuario, deletar_prontuario, listar_prontuario,
+    ler_actions_application
 ) VALUES (
              'ADMINISTRADOR',
              TRUE, TRUE, TRUE, TRUE, TRUE,
@@ -16,17 +17,19 @@ INSERT INTO perfis (
              TRUE, TRUE, TRUE, TRUE, TRUE,
              TRUE, TRUE, TRUE, TRUE, TRUE,
              TRUE, TRUE, TRUE, TRUE, TRUE,
-             TRUE, TRUE, TRUE, TRUE, TRUE
+             TRUE, TRUE, TRUE, TRUE, TRUE,
+             TRUE
          );
 
-INSERT INTO perfis (
+INSERT IGNORE INTO perfis (
     nome,
     cadastrar_funcionario, ler_funcionario, atualizar_funcionario, deletar_funcionario, listar_funcionario,
     cadastrar_paciente, ler_paciente, atualizar_paciente, deletar_paciente, listar_paciente,
     cadastrar_consulta, ler_consulta, atualizar_consulta, deletar_consulta, listar_consulta,
     cadastrar_especialidade, ler_especialidade, atualizar_especialidade, deletar_especialidade, listar_especialidade,
     cadastrar_convenio, ler_convenio, atualizar_convenio, deletar_convenio, listar_convenio,
-    cadastrar_prontuario, ler_prontuario, atualizar_prontuario, deletar_prontuario, listar_prontuario
+    cadastrar_prontuario, ler_prontuario, atualizar_prontuario, deletar_prontuario, listar_prontuario,
+    ler_actions_application
 ) VALUES (
              'MEDICO',
              FALSE, FALSE, FALSE, FALSE, FALSE,
@@ -34,17 +37,19 @@ INSERT INTO perfis (
              TRUE, TRUE, TRUE, FALSE, TRUE,
              FALSE, TRUE, FALSE, FALSE, TRUE,
              FALSE, FALSE, FALSE, FALSE, FALSE,
-             TRUE, TRUE, TRUE, FALSE, TRUE
+             TRUE, TRUE, TRUE, FALSE, TRUE,
+             FALSE
          );
 
-INSERT INTO perfis (
+INSERT IGNORE INTO perfis (
     nome,
     cadastrar_funcionario, ler_funcionario, atualizar_funcionario, deletar_funcionario, listar_funcionario,
     cadastrar_paciente, ler_paciente, atualizar_paciente, deletar_paciente, listar_paciente,
     cadastrar_consulta, ler_consulta, atualizar_consulta, deletar_consulta, listar_consulta,
     cadastrar_especialidade, ler_especialidade, atualizar_especialidade, deletar_especialidade, listar_especialidade,
     cadastrar_convenio, ler_convenio, atualizar_convenio, deletar_convenio, listar_convenio,
-    cadastrar_prontuario, ler_prontuario, atualizar_prontuario, deletar_prontuario, listar_prontuario
+    cadastrar_prontuario, ler_prontuario, atualizar_prontuario, deletar_prontuario, listar_prontuario,
+    ler_actions_application
 ) VALUES (
              'ATENDENTE',
              FALSE, TRUE, FALSE, FALSE, TRUE,
@@ -52,11 +57,11 @@ INSERT INTO perfis (
              TRUE, TRUE, TRUE, FALSE, TRUE,
              FALSE, TRUE, FALSE, FALSE, TRUE,
              TRUE, TRUE, TRUE, FALSE, TRUE,
-             FALSE, FALSE, FALSE, FALSE, FALSE
+             FALSE, FALSE, FALSE, FALSE, FALSE,
+             FALSE
          );
 
-
-INSERT INTO funcionarios (
+INSERT IGNORE INTO funcionarios (
     bairro, cidade, complemento, contato, cpf, data_nascimento,
     email, estado, idade, nome, numero, rua, senha, sexo,
     tipo_funcionario, usuario, perfil_id
@@ -66,7 +71,7 @@ INSERT INTO funcionarios (
              'MASCULINO', 'ADMINISTRADOR', 'admincarlos', 1
          );
 
-INSERT INTO funcionarios (
+INSERT IGNORE INTO funcionarios (
     bairro, cidade, complemento, contato, cpf, data_nascimento,
     email, estado, idade, nome, numero, rua, senha, sexo,
     tipo_funcionario, usuario, perfil_id
@@ -77,7 +82,7 @@ INSERT INTO funcionarios (
          );
 
 
-INSERT INTO funcionarios (
+INSERT IGNORE INTO funcionarios (
     bairro, cidade, complemento, contato, cpf, data_nascimento,
     email, estado, idade, nome, numero, rua, senha, sexo,
     tipo_funcionario, usuario, perfil_id
@@ -88,18 +93,18 @@ INSERT INTO funcionarios (
          );
 
 -- CONVÊNIOS
-INSERT INTO convenios (nome, descricao) VALUES
+INSERT IGNORE INTO convenios (nome, descricao) VALUES
                                             ('Plano Saúde Popular', 'Cobertura básica para consultas e exames simples'),
                                             ('Super Vida', 'Abrange especialidades e internações');
 
 -- ESPECIALIDADES
-INSERT INTO especialidades (nome, descricao) VALUES
+INSERT IGNORE INTO especialidades (nome, descricao) VALUES
                                                  ('Clínico Geral', 'Atendimento médico básico'),
                                                  ('Pediatria', 'Atendimento especializado para crianças');
 
 
 -- PACIENTE
-INSERT INTO pacientes (
+INSERT IGNORE INTO pacientes (
     bairro, cidade, complemento, contato, cpf, data_nascimento, email,
     estado, idade, nome, numero, rua, sexo, convenio_id
 ) VALUES (
@@ -108,7 +113,7 @@ INSERT INTO pacientes (
          );
 
 -- PRONTUÁRIO
-INSERT INTO prontuarios (exames, observacoes, receituario, paciente_id) VALUES (
+INSERT IGNORE INTO prontuarios (exames, observacoes, receituario, paciente_id) VALUES (
                                                                                    'Hemograma, Raio-X',
                                                                                    'Paciente apresentou febre e dores no corpo.',
                                                                                    'Paracetamol 750mg 3x ao dia por 5 dias',
@@ -116,7 +121,7 @@ INSERT INTO prontuarios (exames, observacoes, receituario, paciente_id) VALUES (
                                                                                );
 
 -- CONSULTA
-INSERT INTO consultas (
+INSERT IGNORE INTO consultas (
     data_horario, e_retorno, esta_ativa, sintomas, convenio_id,
     funcionario_id, paciente_id, prontuario_id
 ) VALUES (
