@@ -14,7 +14,7 @@ public class ClinicaMedicaHandleExceptions {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleException(Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro inesperado, tente novamente!"); // Returns a response with status 500.
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro inesperado, tente novamente!");
     }
 
     @ExceptionHandler(
@@ -24,6 +24,6 @@ public class ClinicaMedicaHandleExceptions {
             })
     public ResponseEntity<String> handleUnauthorized(Exception e) {
         log.error("An error occurred: " + e.getMessage()); // Logs the error message.
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Dados de acesso inválido!"); // Returns a response with status 401.
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Dados de acesso inválido!");
     }
 }
