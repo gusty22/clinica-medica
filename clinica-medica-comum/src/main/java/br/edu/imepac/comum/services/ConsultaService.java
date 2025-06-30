@@ -78,8 +78,6 @@ public class ConsultaService {
                 .orElseThrow(() -> new NotFoundClinicaMedicaException("Consulta não encontrada com ID: " + id));
 
         consultaExistente.setDataHorario(LocalDateTime.of(consultaDto.getData(), consultaDto.getHorario()));
-        // se quiser, também atualize eRetorno, estaAtiva, sintomas...
-
         Consulta consultaAtualizada = consultaRepository.save(consultaExistente);
         return mapToDto(consultaAtualizada);
     }

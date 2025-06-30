@@ -12,10 +12,9 @@ import java.util.stream.Collectors;
 public class ActionsApplicationService {
 
     public List<String> getActionsApplication() {
-        // Extract attributes of the Perfil class using reflection
         return Arrays.stream(Perfil.class.getDeclaredFields())
-                .filter(field -> field.getType().equals(boolean.class)) // Check for primitive boolean type
-                .map(Field::getName) // Get the field name
-                .collect(Collectors.toList()); // Collect as a list
+                .filter(field -> field.getType().equals(boolean.class))
+                .map(Field::getName)
+                .collect(Collectors.toList());
     }
 }
