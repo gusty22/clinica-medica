@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Slf4j // Gera automaticamente um logger para a classe, permitindo registrar mensagens de log.
-@RestController // Indica que esta classe é um controlador REST, retornando dados diretamente como resposta (ex.: JSON).
-@RequestMapping("/pacientes") // Define o endpoint base para todos os métodos desta classe.
+@Slf4j
+@RestController
+@RequestMapping("/pacientes")
 public class PacienteController {
 
     private final PacienteService pacienteService;
