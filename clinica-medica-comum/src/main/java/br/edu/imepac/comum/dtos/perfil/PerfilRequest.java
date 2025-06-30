@@ -39,4 +39,6 @@ public class PerfilRequest {
     private boolean atualizarProntuario;
     private boolean deletarProntuario;
     private boolean listarProntuario;
+    private boolean lerActionsApplication;
+
 }
