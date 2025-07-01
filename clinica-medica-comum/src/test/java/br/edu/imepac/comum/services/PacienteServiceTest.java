@@ -30,11 +30,10 @@ public class PacienteServiceTest {
 
     @Test
     void adicionarPaciente_deveSalvarPacienteERetornarDto() {
-        // Arrange
         PacienteRequest request = new PacienteRequest();
         request.setNome("João Silva");
         request.setIdade(30);
-        request.setSexo("MASCULINO");  // Agora que é enum, deve ser string "MASCULINO" ou "FEMININO"
+        request.setSexo("MASCULINO");
         request.setCpf("12345678900");
         request.setRua("Rua A");
         request.setNumero("123");
@@ -48,18 +47,15 @@ public class PacienteServiceTest {
         request.setConvenioId(1L);
 
         Paciente pacienteSalvo = new Paciente();
-        pacienteSalvo.setId(1L); // Long, não Long
+        pacienteSalvo.setId(1L);
         pacienteSalvo.setNome(request.getNome());
         pacienteSalvo.setIdade(request.getIdade());
         pacienteSalvo.setSexo(Sexo.valueOf(request.getSexo()));
-        // Outros campos podem ser setados aqui conforme necessário
 
         when(pacienteRepository.save(any(Paciente.class))).thenReturn(pacienteSalvo);
 
-        // Act
         PacienteDto result = pacienteService.adicionarPaciente(request);
 
-        // Assert
         assertThat(result).isNotNull();
         assertThat(result.getId()).isEqualTo(1);
         assertThat(result.getNome()).isEqualTo(request.getNome());
@@ -68,7 +64,6 @@ public class PacienteServiceTest {
 
     @Test
     void buscarPacientePorId_quandoPacienteExiste_deveRetornarDto() {
-        // Arrange
         Long id = 1L;
         Paciente paciente = new Paciente();
         paciente.setId(id);
@@ -77,10 +72,8 @@ public class PacienteServiceTest {
 
         when(pacienteRepository.findById(id)).thenReturn(Optional.of(paciente));
 
-        // Act
         PacienteDto dto = pacienteService.buscarPacientePorId(id);
 
-        // Assert
         assertThat(dto).isNotNull();
         assertThat(dto.getId()).isEqualTo(id);
         assertThat(dto.getNome()).isEqualTo("Maria");
@@ -88,11 +81,9 @@ public class PacienteServiceTest {
 
     @Test
     void buscarPacientePorId_quandoPacienteNaoExiste_deveLancarException() {
-        // Arrange
         Long id = 999L;
         when(pacienteRepository.findById(id)).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThatThrownBy(() -> pacienteService.buscarPacientePorId(id))
                 .isInstanceOf(NotFoundClinicaMedicaException.class)
                 .hasMessageContaining("Paciente não encontrado");
@@ -100,23 +91,19 @@ public class PacienteServiceTest {
 
     @Test
     void removerPaciente_quandoPacienteExiste_deveChamarDelete() {
-        // Arrange
         Long id = 1L;
         Paciente paciente = new Paciente();
         paciente.setId(id);
 
         when(pacienteRepository.findById(id)).thenReturn(Optional.of(paciente));
 
-        // Act
         pacienteService.removerPaciente(id);
 
-        // Assert
         verify(pacienteRepository, times(1)).delete(paciente);
     }
 
     @Test
     void listarPacientes_deveRetornarListaDeDtos() {
-        // Arrange
         Paciente paciente1 = new Paciente();
         paciente1.setId(1L);
         paciente1.setNome("Paciente 1");
@@ -127,10 +114,8 @@ public class PacienteServiceTest {
 
         when(pacienteRepository.findAll()).thenReturn(List.of(paciente1, paciente2));
 
-        // Act
         List<PacienteDto> pacientes = pacienteService.listarPacientes();
 
-        // Assert
         assertThat(pacientes).hasSize(2);
         assertThat(pacientes.get(0).getNome()).isEqualTo("Paciente 1");
         assertThat(pacientes.get(1).getNome()).isEqualTo("Paciente 2");

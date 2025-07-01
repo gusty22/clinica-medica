@@ -52,7 +52,6 @@ public class ConsultaServiceTest {
 
     @Test
     void adicionarConsulta_deveSalvarEMapearCorretamente() {
-        // Arrange
         ConsultaRequest request = new ConsultaRequest(
                 LocalDate.of(2025, 7, 1),
                 LocalTime.of(10, 0),
@@ -91,10 +90,8 @@ public class ConsultaServiceTest {
         when(prontuarioRepository.findById(4L)).thenReturn(Optional.of(prontuario));
         when(consultaRepository.save(any(Consulta.class))).thenReturn(consultaSalva);
 
-        // Act
         ConsultaDto result = consultaService.adicionarConsulta(request);
 
-        // Assert
         assertThat(result).isNotNull();
         assertThat(result.getId()).isEqualTo(10L);
         assertThat(result.getFuncionario()).isNotNull();
