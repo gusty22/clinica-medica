@@ -31,7 +31,6 @@ class ProntuarioServiceTest {
 
     @Test
     void adicionarProntuario_deveSalvarERetornarDto() {
-        // Arrange
         ProntuarioRequest request = new ProntuarioRequest("Dipirona 500mg", "Exame de sangue", "Paciente com febre", 1L);
 
         Prontuario entity = new Prontuario();
@@ -43,10 +42,8 @@ class ProntuarioServiceTest {
 
         when(prontuarioRepository.save(any(Prontuario.class))).thenReturn(entity);
 
-        // Act
         ProntuarioDto result = prontuarioService.adicionarProntuario(request);
 
-        // Assert
         assertThat(result).isNotNull();
         assertThat(result.getId()).isEqualTo(1L);
         assertThat(result.getReceituario()).isEqualTo("Dipirona 500mg");
@@ -55,7 +52,6 @@ class ProntuarioServiceTest {
 
     @Test
     void buscarProntuarioPorId_quandoExiste_deveRetornarDto() {
-        // Arrange
         Prontuario prontuario = new Prontuario();
         prontuario.setId(1L);
         prontuario.setReceituario("Antibiótico");
@@ -63,10 +59,8 @@ class ProntuarioServiceTest {
 
         when(prontuarioRepository.findById(1L)).thenReturn(Optional.of(prontuario));
 
-        // Act
         ProntuarioDto resultado = prontuarioService.buscarProntuarioPorId(1L);
 
-        // Assert
         assertThat(resultado).isNotNull();
         assertThat(resultado.getReceituario()).isEqualTo("Antibiótico");
     }

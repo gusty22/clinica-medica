@@ -29,7 +29,6 @@ public class PerfilServiceTest {
 
     @Test
     void adicionarPerfil_deveSalvarEretornarPerfilDto() {
-        // Arrange
         PerfilRequest request = new PerfilRequest();
         request.setNome("Administrador");
         request.setCadastrarFuncionario(true);
@@ -41,10 +40,8 @@ public class PerfilServiceTest {
 
         when(perfilRepository.save(any(Perfil.class))).thenReturn(perfilSalvo);
 
-        // Act
         PerfilDto resultado = perfilService.adicionarPerfil(request);
 
-        // Assert
         assertThat(resultado).isNotNull();
         assertThat(resultado.getId()).isEqualTo(1);
         assertThat(resultado.getNome()).isEqualTo("Administrador");
@@ -54,17 +51,14 @@ public class PerfilServiceTest {
 
     @Test
     void buscarPerfilPorId_quandoExiste_deveRetornarPerfilDto() {
-        // Arrange
         Perfil perfil = new Perfil();
         perfil.setId(1);
         perfil.setNome("Leitura");
 
         when(perfilRepository.findById(1L)).thenReturn(Optional.of(perfil));
 
-        // Act
         PerfilDto resultado = perfilService.buscarPerfilPorId(1L);
 
-        // Assert
         assertThat(resultado).isNotNull();
         assertThat(resultado.getId()).isEqualTo(1);
         assertThat(resultado.getNome()).isEqualTo("Leitura");
@@ -72,10 +66,8 @@ public class PerfilServiceTest {
 
     @Test
     void buscarPerfilPorId_quandoNaoExiste_deveLancarException() {
-        // Arrange
         when(perfilRepository.findById(99L)).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThatThrownBy(() -> perfilService.buscarPerfilPorId(99L))
                 .isInstanceOf(RuntimeException.class)
                 .hasMessageContaining("Perfil não encontrado");
@@ -83,7 +75,6 @@ public class PerfilServiceTest {
 
     @Test
     void listarPerfis_deveRetornarListaDePerfilDtos() {
-        // Arrange
         Perfil p1 = new Perfil();
         p1.setId(1);
         p1.setNome("Perfil A");
@@ -94,10 +85,8 @@ public class PerfilServiceTest {
 
         when(perfilRepository.findAll()).thenReturn(List.of(p1, p2));
 
-        // Act
         List<PerfilDto> perfis = perfilService.listarPerfis();
 
-        // Assert
         assertThat(perfis).hasSize(2);
         assertThat(perfis.get(0).getNome()).isEqualTo("Perfil A");
         assertThat(perfis.get(1).getNome()).isEqualTo("Perfil B");
@@ -105,22 +94,18 @@ public class PerfilServiceTest {
 
     @Test
     void removerPerfil_deveDeletarQuandoExiste() {
-        // Arrange
         Perfil perfil = new Perfil();
         perfil.setId(1);
 
         when(perfilRepository.findById(1L)).thenReturn(Optional.of(perfil));
 
-        // Act
         perfilService.removerPerfil(1L);
 
-        // Assert
         verify(perfilRepository, times(1)).delete(perfil);
     }
 
     @Test
     void atualizarPerfil_quandoExiste_deveAtualizarEretornarDto() {
-        // Arrange
         Long id = 1L;
         Perfil perfilExistente = new Perfil();
         perfilExistente.setId(1);
@@ -133,10 +118,8 @@ public class PerfilServiceTest {
         when(perfilRepository.findById(id)).thenReturn(Optional.of(perfilExistente));
         when(perfilRepository.save(any(Perfil.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        // Act
         PerfilDto resultado = perfilService.atualizarPerfil(id, dtoAtualizado);
 
-        // Assert
         assertThat(resultado).isNotNull();
         assertThat(resultado.getNome()).isEqualTo("Novo Nome");
     }

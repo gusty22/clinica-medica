@@ -17,7 +17,7 @@ class AutenticadorServiceTest {
     private IFuncionarioRepository funcionarioRepository;
 
     @Mock
-    private FuncionarioService funcionarioService; // só se usar dentro do service
+    private FuncionarioService funcionarioService;
 
     @InjectMocks
     private AutenticadorService autenticadorService;

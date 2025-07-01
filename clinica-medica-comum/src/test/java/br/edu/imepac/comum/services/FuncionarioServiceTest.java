@@ -29,7 +29,6 @@ class FuncionarioServiceTest {
 
     @Test
     void adicionarFuncionario_deveSalvarEConverterParaDto() {
-        // Arrange
         FuncionarioRequest request = new FuncionarioRequest();
         request.setNome("João Silva");
         request.setUsuario("joaosilva");
@@ -53,10 +52,8 @@ class FuncionarioServiceTest {
 
         when(funcionarioRepository.save(any(Funcionario.class))).thenReturn(funcionarioEntity);
 
-        // Act
         FuncionarioDto dto = funcionarioService.adicionarFuncionario(request);
 
-        // Assert
         assertNotNull(dto);
         assertEquals(1L, dto.getId());
         assertEquals("João Silva", dto.getNome());

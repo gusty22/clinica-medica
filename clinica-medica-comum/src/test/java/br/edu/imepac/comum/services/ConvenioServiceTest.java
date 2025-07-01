@@ -30,7 +30,6 @@ public class ConvenioServiceTest {
 
     @Test
     void adicionarConvenio_deveSalvarEMapearCorretamente() {
-        // Arrange
         ConvenioRequest request = new ConvenioRequest("Unimed", "Plano de saúde regional");
 
         Convenio convenioSalvo = new Convenio();
@@ -40,10 +39,8 @@ public class ConvenioServiceTest {
 
         when(convenioRepository.save(any(Convenio.class))).thenReturn(convenioSalvo);
 
-        // Act
         ConvenioDto result = convenioService.adicionarConvenio(request);
 
-        // Assert
         assertThat(result).isNotNull();
         assertThat(result.getId()).isEqualTo(1L);
         assertThat(result.getNome()).isEqualTo("Unimed");
@@ -52,7 +49,6 @@ public class ConvenioServiceTest {
 
     @Test
     void atualizarConvenio_quandoExiste_deveAtualizar() {
-        // Arrange
         Convenio existente = new Convenio();
         existente.setId(1L);
         existente.setNome("Antigo Nome");
@@ -63,10 +59,8 @@ public class ConvenioServiceTest {
         when(convenioRepository.findById(1L)).thenReturn(Optional.of(existente));
         when(convenioRepository.save(any(Convenio.class))).thenAnswer(i -> i.getArgument(0));
 
-        // Act
         ConvenioDto atualizado = convenioService.atualizarConvenio(1L, dto);
 
-        // Assert
         assertThat(atualizado.getNome()).isEqualTo("Novo Nome");
         assertThat(atualizado.getDescricao()).isEqualTo("Nova descrição");
     }

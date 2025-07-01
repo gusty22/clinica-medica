@@ -28,18 +28,14 @@ class AutorizadorServiceTest {
     void testCheckPermission_shouldReturnPermissionValue() throws NoSuchFieldException, IllegalAccessException {
         PerfilDto perfil = new PerfilDto();
         perfil.setNome("USUARIO");
-
-        // Usando campo booleano real do PerfilDto
         String campo = "lerFuncionario";
 
         var field = PerfilDto.class.getDeclaredField(campo);
         field.setAccessible(true);
 
-        // Testa true
         field.setBoolean(perfil, true);
         assertTrue(service.checkPermission(perfil, campo));
 
-        // Testa false
         field.setBoolean(perfil, false);
         assertFalse(service.checkPermission(perfil, campo));
     }
