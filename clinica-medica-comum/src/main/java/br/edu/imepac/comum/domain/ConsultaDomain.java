@@ -2,7 +2,6 @@ package br.edu.imepac.comum.domain;
 
 import java.time.LocalDateTime;
 
-// ConsultaDomain
 public class ConsultaDomain {
     private Long id;
     private LocalDateTime dataHorario;

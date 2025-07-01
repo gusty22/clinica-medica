@@ -1,4 +1,3 @@
-// clinica-medica-comum/src/main/java/br/edu/imepac/comum/models/Perfil.java
 package br.edu.imepac.comum.models;
 
 import jakarta.persistence.*;

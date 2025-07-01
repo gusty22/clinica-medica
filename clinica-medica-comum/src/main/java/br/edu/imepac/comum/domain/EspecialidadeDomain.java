@@ -1,6 +1,5 @@
 package br.edu.imepac.comum.domain;
 
-// EspecialidadeDomain
 public class EspecialidadeDomain {
     private Long id;
     private String nome;

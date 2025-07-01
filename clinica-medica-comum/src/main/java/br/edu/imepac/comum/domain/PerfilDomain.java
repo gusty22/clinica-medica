@@ -1,6 +1,5 @@
 package br.edu.imepac.comum.domain;
 
-
 public class PerfilDomain {
     private int id;
     private String nome;

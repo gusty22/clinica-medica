@@ -6,6 +6,7 @@ import br.edu.imepac.comum.services.FuncionarioService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/funcionarios")
 public class FuncionarioController {
+
     private final FuncionarioService funcionarioService;
 
     public FuncionarioController(FuncionarioService funcionarioService) {
@@ -23,34 +25,55 @@ public class FuncionarioController {
     @ResponseStatus(HttpStatus.CREATED)
     public FuncionarioDto criarFuncionario(@RequestBody FuncionarioRequest funcionarioRequest) {
         log.info("Criando funcionário - controller: {}", funcionarioRequest);
-        return funcionarioService.adicionarFuncionario(funcionarioRequest);
+        try {
+            return funcionarioService.adicionarFuncionario(funcionarioRequest);
+        } catch (Exception e) {
+            log.error("Erro ao criar funcionário", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro ao criar funcionário.");
+        }
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public FuncionarioDto atualizarFuncionario(@PathVariable Long id, @RequestBody FuncionarioDto funcionarioDto) {
-        log.info("Atualizar funcionário - controller: {}", funcionarioDto);
-        return funcionarioService.atualizarFuncionario(id, funcionarioDto);
+        try {
+            return funcionarioService.atualizarFuncionario(id, funcionarioDto);
+        } catch (Exception e) {
+            log.error("Erro ao atualizar funcionário ID {}: {}", id, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erro ao atualizar funcionário.");
+        }
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removerFuncionario(@PathVariable Long id) {
-        log.info("Remover funcionário - controller: {}", id);
-        funcionarioService.removerFuncionario(id);
+        try {
+            funcionarioService.removerFuncionario(id);
+        } catch (Exception e) {
+            log.error("Erro ao remover funcionário ID {}: {}", id, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Funcionário não encontrado.");
+        }
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public FuncionarioDto buscarFuncionarioPorId(@PathVariable Long id) {
-        log.info("Buscar funcionário - controller: {}", id);
-        return funcionarioService.buscarFuncionarioPorId(id);
+        try {
+            return funcionarioService.buscarFuncionarioPorId(id);
+        } catch (Exception e) {
+            log.error("Erro ao buscar funcionário ID {}: {}", id, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Funcionário não encontrado.");
+        }
     }
 
     @GetMapping("/listar")
     @ResponseStatus(HttpStatus.OK)
     public List<FuncionarioDto> listarFuncionarios() {
-        log.info("Listar funcionários - controller");
-        return funcionarioService.listarFuncionarios();
+        try {
+            return funcionarioService.listarFuncionarios();
+        } catch (Exception e) {
+            log.error("Erro ao listar funcionários", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro ao listar funcionários.");
+        }
     }
 }

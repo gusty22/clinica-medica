@@ -2,7 +2,6 @@ package br.edu.imepac.comum.domain;
 
 import java.time.LocalDate;
 
-// PacienteDomain
 public class PacienteDomain {
     private Long id;
     private String nome;

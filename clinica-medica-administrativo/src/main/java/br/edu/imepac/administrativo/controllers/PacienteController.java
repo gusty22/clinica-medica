@@ -6,6 +6,7 @@ import br.edu.imepac.comum.services.PacienteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -24,34 +25,55 @@ public class PacienteController {
     @ResponseStatus(HttpStatus.CREATED)
     public PacienteDto criarPaciente(@RequestBody PacienteRequest pacienteRequest) {
         log.info("Criando paciente - controller: {}", pacienteRequest);
-        return pacienteService.adicionarPaciente(pacienteRequest);
+        try {
+            return pacienteService.adicionarPaciente(pacienteRequest);
+        } catch (Exception e) {
+            log.error("Erro ao criar paciente", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro ao criar paciente.");
+        }
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public PacienteDto atualizarPaciente(@PathVariable Long id, @RequestBody PacienteDto pacienteDto) {
-        log.info("Atualizar paciente - controller: {}", pacienteDto);
-        return pacienteService.atualizarPaciente(id, pacienteDto);
+        try {
+            return pacienteService.atualizarPaciente(id, pacienteDto);
+        } catch (Exception e) {
+            log.error("Erro ao atualizar paciente ID {}: {}", id, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erro ao atualizar paciente.");
+        }
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removerPaciente(@PathVariable Long id) {
-        log.info("Remover paciente - controller: {}", id);
-        pacienteService.removerPaciente(id);
+        try {
+            pacienteService.removerPaciente(id);
+        } catch (Exception e) {
+            log.error("Erro ao remover paciente ID {}: {}", id, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente não encontrado.");
+        }
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public PacienteDto buscarPacientePorId(@PathVariable Long id) {
-        log.info("Buscar paciente - controller: {}", id);
-        return pacienteService.buscarPacientePorId(id);
+        try {
+            return pacienteService.buscarPacientePorId(id);
+        } catch (Exception e) {
+            log.error("Erro ao buscar paciente ID {}: {}", id, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente não encontrado.");
+        }
     }
 
     @GetMapping("/listar")
     @ResponseStatus(HttpStatus.OK)
     public List<PacienteDto> listarPacientes() {
-        log.info("Listar pacientes - controller");
-        return pacienteService.listarPacientes();
+        try {
+            return pacienteService.listarPacientes();
+        } catch (Exception e) {
+            log.error("Erro ao listar pacientes", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro ao listar pacientes.");
+        }
     }
 }
