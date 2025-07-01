@@ -23,7 +23,7 @@ public class ClinicaMedicaHandleExceptions {
                     ActionClinicaMedicaException.class
             })
     public ResponseEntity<String> handleUnauthorized(Exception e) {
-        log.error("An error occurred: " + e.getMessage()); // Logs the error message.
+        log.error("An error occurred: " + e.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Dados de acesso inválido!");
     }
 }

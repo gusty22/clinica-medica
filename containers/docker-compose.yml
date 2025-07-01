@@ -1,27 +1,89 @@
+version: '3.8'
+
 services:
-  mysql-administrador:
+  administrativo:
+    build:
+      context: ../clinica-medica-administrativo
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: local
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-administrativo:3306/clinica_medica_administrativo?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ""
+    depends_on:
+      - mysql-administrativo
+    restart: unless-stopped
+    entrypoint: ["/wait-for-it.sh", "mysql-administrativo", "3306", "--", "java", "-jar", "/app/app.jar"]
+
+  agendamento:
+    build:
+      context: ../clinica-medica-agendamento
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-agendamento:3306/clinica_medica_agendamento?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ""
+    depends_on:
+      - mysql-agendamento
+    restart: unless-stopped
+    entrypoint: ["/wait-for-it.sh", "mysql-agendamento", "3306", "--", "java", "-jar", "/app/app.jar"]
+
+  atendimento:
+    build:
+      context: ../clinica-medica-atendimento
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-atendimento:3306/clinica_medica_atendimento?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ""
+    depends_on:
+      - mysql-atendimento
+    restart: unless-stopped
+    entrypoint: ["/wait-for-it.sh", "mysql-atendimento", "3306", "--", "java", "-jar", "/app/app.jar"]
+
+  mysql-administrativo:
     image: mysql:8.0
-    container_name: mysql-clinica-administrativo
+    container_name: mysql-administrativo
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_DATABASE: clinica_medica_administrativo
     ports:
       - "4040:3306"
+    volumes:
+      - mysql_administrativo_data:/var/lib/mysql
+    restart: unless-stopped
 
   mysql-agendamento:
     image: mysql:8.0
-    container_name: mysql-clinica-agendamento
+    container_name: mysql-agendamento
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_DATABASE: clinica_medica_agendamento
     ports:
       - "4041:3306"
+    volumes:
+      - mysql_agendamento_data:/var/lib/mysql
+    restart: unless-stopped
 
   mysql-atendimento:
     image: mysql:8.0
-    container_name: mysql-clinica-atendimento
+    container_name: mysql-atendimento
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_DATABASE: clinica_medica_atendimento
     ports:
       - "4042:3306"
+    volumes:
+      - mysql_atendimento_data:/var/lib/mysql
+    restart: unless-stopped
+
+volumes:
+  mysql_administrativo_data:
+  mysql_agendamento_data:
+  mysql_atendimento_data:

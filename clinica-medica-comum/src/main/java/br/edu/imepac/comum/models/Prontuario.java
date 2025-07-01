@@ -18,7 +18,7 @@ public class Prontuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "receituario", length = 1000)
     private String receituario;

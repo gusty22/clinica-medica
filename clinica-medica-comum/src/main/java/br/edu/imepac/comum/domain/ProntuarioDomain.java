@@ -1,6 +1,5 @@
 package br.edu.imepac.comum.domain;
 
-// ProntuarioDomain
 public class ProntuarioDomain {
     private Long id;
     private String receituario;
