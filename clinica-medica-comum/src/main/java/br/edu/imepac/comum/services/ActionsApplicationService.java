@@ -12,9 +12,13 @@ import java.util.stream.Collectors;
 public class ActionsApplicationService {
 
     public List<String> getActionsApplication() {
-        return Arrays.stream(Perfil.class.getDeclaredFields())
+        List<String> fields = Arrays.stream(Perfil.class.getDeclaredFields())
                 .filter(field -> field.getType().equals(boolean.class))
                 .map(Field::getName)
                 .collect(Collectors.toList());
+
+        System.out.println("Campos boolean em Perfil: " + fields);
+        return fields;
     }
+
 }
