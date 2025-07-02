@@ -1,8 +1,6 @@
 version: '3.8'
 
 services:
-
-
   administrativo:
     build:
       context: ../clinica-medica-administrativo
@@ -19,7 +17,6 @@ services:
     restart: unless-stopped
     entrypoint: ["/wait-for-it.sh", "mysql-administrativo", "3306", "--", "java", "-jar", "/app/app.jar"]
 
-
   agendamento:
     build:
       context: ../clinica-medica-agendamento
@@ -34,7 +31,6 @@ services:
       - mysql-agendamento
     restart: unless-stopped
     entrypoint: ["/wait-for-it.sh", "mysql-agendamento", "3306", "--", "java", "-jar", "/app/app.jar"]
-
 
   atendimento:
     build:
@@ -51,7 +47,6 @@ services:
     restart: unless-stopped
     entrypoint: ["/wait-for-it.sh", "mysql-atendimento", "3306", "--", "java", "-jar", "/app/app.jar"]
 
-
   mysql-administrativo:
     image: mysql:8.0
     container_name: mysql-administrativo
@@ -63,7 +58,6 @@ services:
     volumes:
       - mysql_administrativo_data:/var/lib/mysql
     restart: unless-stopped
-
 
   mysql-agendamento:
     image: mysql:8.0
@@ -77,7 +71,6 @@ services:
       - mysql_agendamento_data:/var/lib/mysql
     restart: unless-stopped
 
-
   mysql-atendimento:
     image: mysql:8.0
     container_name: mysql-atendimento
@@ -89,7 +82,6 @@ services:
     volumes:
       - mysql_atendimento_data:/var/lib/mysql
     restart: unless-stopped
-
 
   sonarqube-postgres:
     image: postgres:13
@@ -103,7 +95,6 @@ services:
       - sonarqube-postgres-data:/var/lib/postgresql/data
     restart: unless-stopped
 
-
   sonarqube:
     image: sonarqube:latest
     container_name: sonarqube
@@ -116,7 +107,6 @@ services:
     depends_on:
       - sonarqube-postgres
     restart: unless-stopped
-
 
   sonar-scanner:
     image: sonarsource/sonar-scanner-cli:latest
@@ -141,7 +131,6 @@ services:
     depends_on:
       - sonarqube
     restart: "no"
-
 
 volumes:
   mysql_administrativo_data:
