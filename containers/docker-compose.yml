@@ -83,7 +83,57 @@ services:
       - mysql_atendimento_data:/var/lib/mysql
     restart: unless-stopped
 
+  sonarqube-postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: sonar
+      POSTGRES_PASSWORD: sonar
+      POSTGRES_DB: sonarqube
+    ports:
+      - "5432:5432"
+    volumes:
+      - sonarqube-postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  sonarqube:
+    image: sonarqube:latest
+    container_name: sonarqube
+    environment:
+      SONARQUBE_JDBC_URL: jdbc:postgresql://sonarqube-postgres:5432/sonarqube
+      SONARQUBE_JDBC_USERNAME: sonar
+      SONARQUBE_JDBC_PASSWORD: sonar
+    ports:
+      - "9000:9000"
+    depends_on:
+      - sonarqube-postgres
+    restart: unless-stopped
+
+  sonar-scanner:
+    image: sonarsource/sonar-scanner-cli:latest
+    container_name: sonar-scanner
+    environment:
+      - SONAR_HOST_URL=http://sonarqube:9000
+      - SONAR_LOGIN=${SONAR_LOGIN_TOKEN}
+      - SONAR_PROJECT_KEY=clinica-medica
+      - SONAR_SOURCES=.
+      - SONAR_JAVA_BINARIES=./**/target/classes
+      - SONAR_EXCLUSIONS=**/target/**,**/test/**
+    volumes:
+      - ..:/usr/src
+    command: >
+      /bin/sh -c "
+        until wget -q -O - http://sonarqube:9000/api/system/status; do
+          echo 'Aguardando o SonarQube iniciar...';
+          sleep 5;
+        done;
+        sonar-scanner;
+      "
+    depends_on:
+      - sonarqube
+    restart: "no"
+
 volumes:
   mysql_administrativo_data:
   mysql_agendamento_data:
   mysql_atendimento_data:
+  sonarqube-postgres-data:
