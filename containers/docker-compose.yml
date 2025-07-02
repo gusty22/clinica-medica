@@ -2,9 +2,7 @@ version: '3.8'
 
 services:
 
-  # -----------------------------
-  # Backend Administrativo
-  # -----------------------------
+
   administrativo:
     build:
       context: ../clinica-medica-administrativo
@@ -21,9 +19,7 @@ services:
     restart: unless-stopped
     entrypoint: ["/wait-for-it.sh", "mysql-administrativo", "3306", "--", "java", "-jar", "/app/app.jar"]
 
-  # -----------------------------
-  # Backend Agendamento
-  # -----------------------------
+
   agendamento:
     build:
       context: ../clinica-medica-agendamento
@@ -39,9 +35,7 @@ services:
     restart: unless-stopped
     entrypoint: ["/wait-for-it.sh", "mysql-agendamento", "3306", "--", "java", "-jar", "/app/app.jar"]
 
-  # -----------------------------
-  # Backend Atendimento
-  # -----------------------------
+
   atendimento:
     build:
       context: ../clinica-medica-atendimento
@@ -57,9 +51,7 @@ services:
     restart: unless-stopped
     entrypoint: ["/wait-for-it.sh", "mysql-atendimento", "3306", "--", "java", "-jar", "/app/app.jar"]
 
-  # -----------------------------
-  # MySQL - Administrativo
-  # -----------------------------
+
   mysql-administrativo:
     image: mysql:8.0
     container_name: mysql-administrativo
@@ -72,9 +64,7 @@ services:
       - mysql_administrativo_data:/var/lib/mysql
     restart: unless-stopped
 
-  # -----------------------------
-  # MySQL - Agendamento
-  # -----------------------------
+
   mysql-agendamento:
     image: mysql:8.0
     container_name: mysql-agendamento
@@ -87,9 +77,7 @@ services:
       - mysql_agendamento_data:/var/lib/mysql
     restart: unless-stopped
 
-  # -----------------------------
-  # MySQL - Atendimento
-  # -----------------------------
+
   mysql-atendimento:
     image: mysql:8.0
     container_name: mysql-atendimento
@@ -102,9 +90,7 @@ services:
       - mysql_atendimento_data:/var/lib/mysql
     restart: unless-stopped
 
-  # -----------------------------
-  # PostgreSQL - SonarQube
-  # -----------------------------
+
   sonarqube-postgres:
     image: postgres:13
     environment:
@@ -117,9 +103,7 @@ services:
       - sonarqube-postgres-data:/var/lib/postgresql/data
     restart: unless-stopped
 
-  # -----------------------------
-  # SonarQube (Servidor)
-  # -----------------------------
+
   sonarqube:
     image: sonarqube:latest
     container_name: sonarqube
@@ -133,9 +117,7 @@ services:
       - sonarqube-postgres
     restart: unless-stopped
 
-  # -----------------------------
-  # Sonar Scanner
-  # -----------------------------
+
   sonar-scanner:
     image: sonarsource/sonar-scanner-cli:latest
     container_name: sonar-scanner
@@ -160,9 +142,7 @@ services:
       - sonarqube
     restart: "no"
 
-# -----------------------------
-# Volumes persistentes
-# -----------------------------
+
 volumes:
   mysql_administrativo_data:
   mysql_agendamento_data:
