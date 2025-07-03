@@ -3,13 +3,17 @@ package br.edu.imepac.comum.services;
 import br.edu.imepac.comum.dtos.prontuario.ProntuarioDto;
 import br.edu.imepac.comum.dtos.prontuario.ProntuarioRequest;
 import br.edu.imepac.comum.exceptions.NotFoundClinicaMedicaException;
+import br.edu.imepac.comum.models.Consulta;
 import br.edu.imepac.comum.models.Prontuario;
+import br.edu.imepac.comum.repositories.IConsultaRepository;
 import br.edu.imepac.comum.repositories.IProntuarioRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -17,10 +21,12 @@ public class ProntuarioService {
 
     private final ModelMapper modelMapper;
     private final IProntuarioRepository prontuarioRepository;
+    private final IConsultaRepository consultaRepository;
 
-    public ProntuarioService(ModelMapper modelMapper, IProntuarioRepository prontuarioRepository) {
+    public ProntuarioService(ModelMapper modelMapper, IProntuarioRepository prontuarioRepository, IConsultaRepository consultaRepository) {
         this.modelMapper = modelMapper;
         this.prontuarioRepository = prontuarioRepository;
+        this.consultaRepository = consultaRepository;
     }
 
     public ProntuarioDto adicionarProntuario(ProntuarioRequest prontuarioRequest) {
@@ -39,10 +45,20 @@ public class ProntuarioService {
         return modelMapper.map(prontuarioAtualizado, ProntuarioDto.class);
     }
 
+    @Transactional
     public void removerProntuario(Long id) {
         log.info("Removendo prontuário com ID: {}", id);
         Prontuario prontuario = prontuarioRepository.findById(id)
                 .orElseThrow(() -> new NotFoundClinicaMedicaException("Prontuário não encontrado com ID: " + id));
+
+        List<Consulta> consultas = prontuario.getConsultas();
+        if (consultas != null && !consultas.isEmpty()) {
+            for (Consulta consulta : consultas) {
+                consulta.setProntuario(null);
+                consultaRepository.save(consulta);
+            }
+        }
+
         prontuarioRepository.delete(prontuario);
     }
 
@@ -58,6 +74,6 @@ public class ProntuarioService {
         List<Prontuario> prontuarios = prontuarioRepository.findAll();
         return prontuarios.stream()
                 .map(prontuario -> modelMapper.map(prontuario, ProntuarioDto.class))
-                .toList();
+                .collect(Collectors.toList());
     }
 }

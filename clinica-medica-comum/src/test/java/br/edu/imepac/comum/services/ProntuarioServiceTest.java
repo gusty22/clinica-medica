@@ -3,13 +3,16 @@ package br.edu.imepac.comum.services;
 import br.edu.imepac.comum.dtos.prontuario.ProntuarioDto;
 import br.edu.imepac.comum.dtos.prontuario.ProntuarioRequest;
 import br.edu.imepac.comum.exceptions.NotFoundClinicaMedicaException;
+import br.edu.imepac.comum.models.Consulta;
 import br.edu.imepac.comum.models.Paciente;
 import br.edu.imepac.comum.models.Prontuario;
+import br.edu.imepac.comum.repositories.IConsultaRepository; // Import necessário
 import br.edu.imepac.comum.repositories.IProntuarioRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,14 +22,16 @@ import static org.mockito.Mockito.*;
 class ProntuarioServiceTest {
 
     private IProntuarioRepository prontuarioRepository;
+    private IConsultaRepository consultaRepository;
     private ModelMapper modelMapper;
     private ProntuarioService prontuarioService;
 
     @BeforeEach
     void setUp() {
         prontuarioRepository = mock(IProntuarioRepository.class);
+        consultaRepository = mock(IConsultaRepository.class);
         modelMapper = new ModelMapper();
-        prontuarioService = new ProntuarioService(modelMapper, prontuarioRepository);
+        prontuarioService = new ProntuarioService(modelMapper, prontuarioRepository, consultaRepository);
     }
 
     @Test
@@ -97,13 +102,25 @@ class ProntuarioServiceTest {
 
     @Test
     void removerProntuario_quandoExiste_deveRemover() {
+        // Arrange
         Prontuario prontuario = new Prontuario();
         prontuario.setId(1L);
 
+        Consulta consulta1 = new Consulta();
+        consulta1.setId(101L);
+        consulta1.setProntuario(prontuario);
+
+        List<Consulta> consultas = new ArrayList<>();
+        consultas.add(consulta1);
+        prontuario.setConsultas(consultas);
+
         when(prontuarioRepository.findById(1L)).thenReturn(Optional.of(prontuario));
 
+        // Act
         prontuarioService.removerProntuario(1L);
 
+        // Assert
+        verify(consultaRepository, times(1)).save(any(Consulta.class));
         verify(prontuarioRepository, times(1)).delete(prontuario);
     }
 
