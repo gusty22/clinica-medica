@@ -40,7 +40,7 @@ public class Consulta {
     private Paciente paciente;
 
     @ManyToOne
-    @JoinColumn(name = "prontuario_id")
+    @JoinColumn(name = "prontuario_id", nullable = true)
     private Prontuario prontuario;
 
     @ManyToOne
